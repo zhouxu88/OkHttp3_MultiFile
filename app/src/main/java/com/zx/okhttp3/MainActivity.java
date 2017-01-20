@@ -116,8 +116,15 @@ public class MainActivity extends AppCompatActivity{
         //开始Post请求,上传文件
         OKHttpUtils.doPostRequest(POST_FILE_URL, initUploadFile(), uiProgressRequestListener, new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(Call call, final IOException e) {
                 Log.i("TAG", "error------> "+e.getMessage());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "上传失败"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
 
             @Override
@@ -179,7 +186,7 @@ public class MainActivity extends AppCompatActivity{
         };
 
         //开启文件下载
-        OKHttpUtils.downloadandSaveFile(DOWNLOAD_TEST_URL,STORE_DOWNLOAD_FILE_PATH,uiProgressResponseListener);
+        OKHttpUtils.downloadAndSaveFile(this,DOWNLOAD_TEST_URL,STORE_DOWNLOAD_FILE_PATH,uiProgressResponseListener);
 
     }
 

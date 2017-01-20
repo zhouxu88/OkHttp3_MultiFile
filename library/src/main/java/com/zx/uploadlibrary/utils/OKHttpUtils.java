@@ -1,7 +1,9 @@
 package com.zx.uploadlibrary.utils;
 
 
+import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.zx.uploadlibrary.helper.ProgressHelper;
 import com.zx.uploadlibrary.listener.ProgressListener;
@@ -282,14 +284,20 @@ public class OKHttpUtils {
      * @param savePath                   下载后的文件的保存路径
      * @param uiProgressResponseListener 下载进度的监听器
      */
-    public static void downloadandSaveFile(String downloadUrl, final String savePath, UIProgressListener uiProgressResponseListener) {
+    public static void downloadAndSaveFile(final Activity activity, String downloadUrl, final String savePath, UIProgressListener uiProgressResponseListener) {
         //包装Response使其支持进度回调
         ProgressHelper.addProgressResponseListener(OKHttpUtils.getOkHttpClientInstance(), uiProgressResponseListener, savePath)
                 .newCall(getRequest(downloadUrl))
                 .enqueue(new Callback() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
+                    public void onFailure(Call call, final IOException e) {
                         Log.i("TAG", "下载错误： " + e.getMessage());
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, "下载错误"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                     @Override
@@ -311,6 +319,7 @@ public class OKHttpUtils {
         while ((len = bis.read(data)) != -1) {
             fos.write(data, 0, len);
         }
+        Log.i("TAG", "保存文件"+savePath+"成功");
         fos.flush();
         fos.close();
         bis.close();
