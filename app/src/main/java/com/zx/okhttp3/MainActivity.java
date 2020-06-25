@@ -151,7 +151,10 @@ public class MainActivity extends AppCompatActivity{
 
             }
         };
-
+        if(list==null){
+            Toast.makeText(MainActivity.this, "请选择图片在上传", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //开始Post请求,上传文件
         OKHttpUtils.doPostRequest(POST_FILE_URL, list, uiProgressRequestListener, new Callback() {
