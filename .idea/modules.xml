@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OkHttp3.iml" filepath="$PROJECT_DIR$/OkHttp3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OkHttp3_MultiFile.iml" filepath="$PROJECT_DIR$/.idea/modules/OkHttp3_MultiFile.iml" group="OkHttp3_MultiFile" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/OkHttp3_MultiFile-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/OkHttp3_MultiFile-app.iml" group="OkHttp3_MultiFile/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/OkHttp3_MultiFile-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/OkHttp3_MultiFile-library.iml" group="OkHttp3_MultiFile/library" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>

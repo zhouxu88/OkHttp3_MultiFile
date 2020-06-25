@@ -211,7 +211,7 @@ public class OKHttpUtils {
             //根据文件的后缀名，获得文件类型
             String fileType = getMimeType(file.getName());
             builder.addFormDataPart( //给Builder添加上传的文件
-                    "image",  //请求的名字
+                    "filename",  //请求的名字
                     file.getName(), //文件的文字，服务器端用来解析的
                     RequestBody.create(MediaType.parse(fileType), file) //创建RequestBody，把上传的文件放入
             );
