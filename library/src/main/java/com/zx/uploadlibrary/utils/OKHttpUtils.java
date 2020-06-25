@@ -18,6 +18,7 @@ import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -39,7 +40,7 @@ import okhttp3.ResponseBody;
 public class OKHttpUtils {
 
     private static OkHttpClient client;
-
+    private static String UPLOAD_NAME = "filename";
     /**
      * 创建一个OkHttpClient的对象的单例
      *
@@ -106,6 +107,7 @@ public class OKHttpUtils {
                 .post(ProgressHelper.addProgressRequestListener(
                         OKHttpUtils.getRequestBody(fileNames),
                         uiProgressRequestListener));
+
         return builder.build();
     }
 
@@ -135,10 +137,12 @@ public class OKHttpUtils {
      * @param fileNames 完整的文件路径名
      * @return
      */
-    private static Request getRequest(String url, HashMap<String, String> map, List<String> fileNames) {
+    private static Request getRequest(String url, HashMap<String, String> map, List<String> fileNames, ProgressListener uiProgressRequestListener) {
         Request.Builder builder = new Request.Builder();
         builder.url(url)
-                .post(getRequestBody(map, fileNames))
+                .post(ProgressHelper.addProgressRequestListener(
+                        OKHttpUtils.getRequestBody(map, fileNames),
+                        uiProgressRequestListener))
                 .tag(url) //设置请求的标记，可在取消时使用
         ;
         return builder.build();
@@ -188,7 +192,7 @@ public class OKHttpUtils {
             File file = new File(fileNames.get(i)); //生成文件
             String fileType = getMimeType(file.getName()); //根据文件的后缀名，获得文件类型
             builder.addFormDataPart( //给Builder添加上传的文件
-                    "image",  //请求的名字
+                    UPLOAD_NAME,  //请求的名字
                     file.getName(), //文件的文字，服务器端用来解析的
                     RequestBody.create(MediaType.parse(fileType), file) //创建RequestBody，把上传的文件放入
             );
@@ -211,14 +215,27 @@ public class OKHttpUtils {
             //根据文件的后缀名，获得文件类型
             String fileType = getMimeType(file.getName());
             builder.addFormDataPart( //给Builder添加上传的文件
-                    "image",  //请求的名字
+                    UPLOAD_NAME,  //请求的名字
                     file.getName(), //文件的文字，服务器端用来解析的
                     RequestBody.create(MediaType.parse(fileType), file) //创建RequestBody，把上传的文件放入
             );
         }
+
         return builder.build(); //根据Builder创建请求
     }
 
+    /**
+     * 添加参数到RequestBody 中，也可以随上传文件一起添加参数一起提交接口
+     * @param params
+     * @return
+     */
+    private static RequestBody AddParam2Request(Map<String,String> params){
+        FormBody.Builder newFormBody = new FormBody.Builder();
+        for(Map.Entry<String,String> entry :params.entrySet()){
+            newFormBody.add(entry.getKey(),entry.getValue());
+        }
+        return newFormBody.build();
+    }
     /**
      * 只上传文件
      * 根据url，发送异步Post请求(带进度)
@@ -271,8 +288,8 @@ public class OKHttpUtils {
      * @param fileNames 完整的上传的文件的路径名
      * @param callback  OkHttp的回调接口
      */
-    public static void doPostRequest(String url, HashMap<String, String> map, List<String> fileNames, Callback callback) {
-        Call call = getOkHttpClientInstance().newCall(getRequest(url, map, fileNames));
+    public static void doPostRequest(String url, HashMap<String, String> map, List<String> fileNames,UIProgressListener uiProgressRequestListener, Callback callback) {
+        Call call = getOkHttpClientInstance().newCall(getRequest(url, map, fileNames,uiProgressRequestListener));
         call.enqueue(callback);
     }
 

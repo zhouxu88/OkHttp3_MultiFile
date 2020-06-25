@@ -4,8 +4,22 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    >
 
+    <TextView
+        android:id="@+id/images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center_horizontal"
+        android:hint="点击此处选择图片"
+        android:maxLines="1"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#000"
+        android:textColorHint="#888"
+        android:text="点击此处选择图片"
+        android:textSize="16sp" />
     <TextView
         android:id="@+id/tv_upload_progress"
         android:layout_width="wrap_content"
@@ -16,6 +30,7 @@
         android:textColor="#f00" />
     <!--显示上传的进度条-->
     <ProgressBar
+        android:visibility="invisible"
         android:id="@+id/upload_progress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
@@ -52,6 +67,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="下载" />
+    <GridView
+        android:id="@+id/gridView"
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:verticalSpacing="5dp"/>
 
 </LinearLayout>

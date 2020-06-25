@@ -166,3 +166,7 @@ dependencies {
 
 **备注**
 > 文件上传、下载中的UIProgressListener 实现的3个方法onUIProgress()、onUIStart()、onUIFinish()的内容都可以根据项目需求自定义
+
+### 2020.6.25.Thu.
+改成自选图片是不是方便demo呢？
+感觉这个带进度条上传的更清晰，但是携带参数不方便

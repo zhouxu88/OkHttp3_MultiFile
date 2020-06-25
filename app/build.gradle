@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '30.0.0'
     defaultConfig {
-        applicationId "com.zx.okhttp3"
+        applicationId "com.zx_mod.okhttp3"
         minSdkVersion 17
         targetSdkVersion 24
         versionCode 1
@@ -20,13 +20,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    testCompile 'junit:junit:4.12'
-    compile 'com.squareup.okhttp3:okhttp:3.5.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile project(':library')
+    implementation 'com.android.support:appcompat-v7:24.2.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.squareup.okhttp3:okhttp:3.5.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation project(':library')
+    implementation 'com.lzy.widget:imagepicker:0.4.1'
+    implementation 'com.zhy:base-adapter:3.0.3'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }
