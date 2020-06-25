@@ -27,6 +27,7 @@ import com.zx.uploadlibrary.utils.OKHttpUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity{
         findViewById(R.id.upload).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploadProgress.setVisibility(View.VISIBLE);
                 upload();
             }
         });
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onUIFinish(long bytesWrite, long contentLength, boolean done) {
                 super.onUIFinish(bytesWrite, contentLength, done);
-                //uploadProgress.setVisibility(View.GONE); //设置进度条不可见
+                uploadProgress.setVisibility(View.GONE); //设置进度条不可见
                 Toast.makeText(getApplicationContext(),"上传成功",Toast.LENGTH_SHORT).show();
 
             }
@@ -155,9 +157,10 @@ public class MainActivity extends AppCompatActivity{
             Toast.makeText(MainActivity.this, "请选择图片在上传", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        HashMap<String,String> map = new HashMap<>();
+        map.put("duty_num","518518");
         //开始Post请求,上传文件
-        OKHttpUtils.doPostRequest(POST_FILE_URL, list, uiProgressRequestListener, new Callback() {
+        OKHttpUtils.doPostRequest(POST_FILE_URL,map, list, uiProgressRequestListener, new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
                 Log.i("TAG", "error------> "+e.getMessage());
